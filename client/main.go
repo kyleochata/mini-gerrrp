@@ -13,7 +13,8 @@ const (
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost"+port, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("localhost"+port, grpc.WithTransportCredentials(insecure.NewCredentials()))
+
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}
@@ -21,10 +22,11 @@ func main() {
 
 	client := pb.NewGreetServiceClient(conn)
 
-	// 	names := &pb.NamesList{
-	// 		Names: []string{"Alice", "Bob", "Charlie"},
-	// 	}
+	names := &pb.NamesList{
+		Names: []string{"Alice", "Bob", "Charlie"},
+	}
 
-	callSayHello(client)
+	// callSayHello(client)
 	// }
+	callSayHelloServerStream(client, names)
 }
