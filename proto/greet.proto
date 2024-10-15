@@ -5,13 +5,13 @@ option go_package = "./proto";
 package greet_service;
 
 service GreetService {
-  rpc SayHello (NoParam) returns (SayHelloResponse);
+  rpc SayHello (NoParam) returns (HelloResponse);
 
-  rpc SayHelloServerStream (NamesList) returns (stream SayHelloResponse);
+  rpc SayHelloServerStream (NamesList) returns (stream HelloResponse);
 
-  rpc SayHelloClientStream (stream NamesList) returns (SayHelloResponse);
+  rpc SayHelloClientStream (stream HelloRequest) returns (MessagesList);
 
-  rpc SayHelloBiDiStream (stream NamesList) returns (stream SayHelloResponse);
+  rpc SayHelloBiDiStream (stream HelloRequest) returns (stream HelloResponse);
 }
 
 message NoParam {}
@@ -19,9 +19,15 @@ message NoParam {}
 message NamesList {
   repeated string names = 1;
 }
-message SayHelloResponse {
+message HelloResponse {
   string message = 1;
 }
 
+message HelloRequest {
+  string name = 1;
+}
 
 
+message MessagesList {
+  repeated string messages = 1;
+}
